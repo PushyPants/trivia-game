@@ -2,7 +2,9 @@ $(document).ready(function(){
 
     let totalCorrect = 0;
     let totalIncorrect = 0;
+    let totalUnanswered = 0;
     let currentQuestion = 0;
+    let questionCountdown;
     let currentTime;
     let userAnswer;
     let answerState;
@@ -40,22 +42,38 @@ $(document).ready(function(){
     shuffleArray(questions);
 
     function evaluateAnswer() {
-        $('#questionCard').on('click', 'h3', function() {
-            console.log('You clicked: ' + $(this).text())
-            console.log('Correct answer is: ' + questions[currentQuestion].correctAnswer)
-            if ($(this).text() === questions[currentQuestion].correctAnswer){
-                answerState = 'correct';
-                totalCorrect++;
-                console.log('You got it right!');
-                console.log('answerState has been set to: ' + answerState);
-                transitionScreen();
-            } else {
-                answerState = 'incorrect';
-                totalIncorrect++;
-                console.log('You got it wrong');
-                transitionScreen();
-            }
-        })
+        currentTime = 10;
+        console.log(currentTime);
+        //Ask question
+        questionCountdown = setInterval(function(){
+            currentTime--;
+            if (currentTime > 0) {
+                $('#countdown').text(currentTime);
+                $('#questionCard').on('click', 'h3', function() {
+                    clearInterval(questionCountdown);
+                    console.log('You clicked: ' + $(this).text())
+                    console.log('Correct answer is: ' + questions[currentQuestion].correctAnswer)
+                    if ($(this).text() === questions[currentQuestion].correctAnswer){
+                        answerState = 'correct';
+                        totalCorrect++;
+                        console.log('You got it right!');
+                    console.log('answerState has been set to: ' + answerState);
+                    transitionScreen();
+                } else {
+                    answerState = 'incorrect';
+                    totalIncorrect++;
+                    console.log('You got it wrong');
+                    transitionScreen();
+                }
+            })
+        } else if (currentTime <= 0) {
+            clearInterval(questionCountdown);
+            $('#countdown').text('times es up...')
+            answerState = 'timeout';
+            totalUnanswered++
+            transitionScreen();
+        }
+    }, 1000);
     }
 
     function transitionScreen() {
@@ -70,7 +88,7 @@ $(document).ready(function(){
                 $('#questionCard').html(`<h1>You got it wrong!</h2>`);
             break;
             case 'timeout': 
-                totalIncorrect++
+                $('#countdown').html(`<h3 id="countdown" class="card-title text-center">Times Up!</h3>`);
                 $('#questionCard').empty();
                 $('#questionCard').html(`<h1>Times up!</h2>`);
             break;
@@ -79,30 +97,21 @@ $(document).ready(function(){
     }
 
     function displayQuestion() {
-        //Ask question
-        if (currentTime < 0 || currentTime === undefined) {
-            i = questions[currentQuestion]
-            $('#questionCard').empty();
-            $('#questionCard').html(`
-                <h1 id="question"></h1>
-                <div id="choices"></h3>
-            `);            
-            $('#question').text(i.question);
-            console.log(i.question);
-            shuffleArray(i.choices);
-            for (j=0; j < i.choices.length; j++ ){
-                $('#choices').append($('<h3 id="answerIndex' + j + '" class="answer"></h3>').text(i.choices[j]));
-            }
-            console.log(i.choices);
-            console.log(i.correctAnswer);
-            evaluateAnswer();
-        } else {
-            answerState = 'timeout';
-            evaluateAnswer();
-            //go to timout screen
-            //start timer to go to next question
+        i = questions[currentQuestion]
+        $('#questionCard').empty();
+        $('#questionCard').html(`
+            <h1 id="question"></h1>
+            <div id="choices"></h3>
+        `);            
+        $('#question').text(i.question);
+        console.log(i.question);
+        shuffleArray(i.choices);
+        for (j=0; j < i.choices.length; j++ ){
+            $('#choices').append($('<h3 id="answerIndex' + j + '" class="answer"></h3>').text(i.choices[j]));
         }
-          
+        console.log(i.choices);
+        console.log(i.correctAnswer);
+        evaluateAnswer();          
     }
 
     function nextQuestion() { 
