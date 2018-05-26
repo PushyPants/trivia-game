@@ -68,52 +68,53 @@ $(document).ready(function(){
                 $('#questionCard').html(`<h1>You got it right!</h2>`);
                 setTimeout(nextQuestion, 5000);
             break;
-            case 'incorrect': //display incorrect answer screen;
+            case 'incorrect': 
+            $('#questionCard').empty();
+            $('#questionCard').html(`<h1>You got it wrong!</h2>`);
+            setTimeout(nextQuestion, 5000);
             break;
-            case 'timeout': //display timeout screen;
+            case 'timeout': 
+            $('#questionCard').empty();
+            $('#questionCard').html(`<h1>Times up!</h2>`);
+            setTimeout(nextQuestion, 5000);
             break;
         }
     }
 
     function displayQuestion() {
             //Ask question
-            i = questions[currentQuestion]
-            $('#questionCard').empty();
-            $('#questionCard').html(`
-                <h1 id="question"></h1>
-                <div id="choices"></h3>
-            `);            
-            $('#question').text(i.question);
-            console.log(i.question);
-            shuffleArray(i.choices);
-            for (j=0; j < i.choices.length; j++ ){
-                $('#choices').append($('<h3 id="answerIndex' + j + '" class="answer"></h3>').text(i.choices[j]));
+            if (currentTime < 0 || currentTime === undefined) {
+                i = questions[currentQuestion]
+                $('#questionCard').empty();
+                $('#questionCard').html(`
+                    <h1 id="question"></h1>
+                    <div id="choices"></h3>
+                `);            
+                $('#question').text(i.question);
+                console.log(i.question);
+                shuffleArray(i.choices);
+                for (j=0; j < i.choices.length; j++ ){
+                    $('#choices').append($('<h3 id="answerIndex' + j + '" class="answer"></h3>').text(i.choices[j]));
+                }
+                console.log(i.choices);
+                console.log(i.correctAnswer);
+                evaluateAnswer();
+            } else {
+                answerState = 'timeout';
+                evaluateAnswer();
+                //go to timout screen
+                //start timer to go to next question
             }
-            console.log(i.choices);
-            console.log(i.correctAnswer);
-            evaluateAnswer();
+          
         }
 
    function nextQuestion() { 
        currentQuestion++
        if (currentQuestion < questions.length) {
-            displayQuestion();
-            if (currentTime < 0) {
-                //take input for answer and check to see if it is correct or not
-                    //if correct:
-                        //got to correct answer screen
-                        //start timer to go to next question (this should be a function)
-                    //if not correct:
-                        //go to incorrect answer screen
-                        //start timer to go to next question
-            } else {
-                answerState = 'timeout';
-                //go to timout screen
-                //start timer to go to next question
-            }
-
+            displayQuestion();       
         } else {
-            //display stats screen
+            $('#questionCard').empty();
+            $('#questionCard').html('<h1>Game Over. Stats here soon.</h1>');
         }
    };
 
