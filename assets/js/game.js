@@ -20,12 +20,12 @@ $(document).ready(function(){
             correctAnswer: 'rock',            
         }
     ]
-// setInterval(function(){
-//     counter++;
-//     $('#counter').text(counter);
-// },1000)
+    // setInterval(function(){
+    //     counter++;
+    //     $('#counter').text(counter);
+    // },1000)
 
-$(".jumbotron").on("click", ".dQ", displayQuestion);
+    $(".jumbotron").on("click", ".dQ", displayQuestion);
     
     //Create function to shuffle arrays. to be used in suffling the question order & also each questions answer order.
     function shuffleArray(array) {
@@ -48,11 +48,13 @@ $(".jumbotron").on("click", ".dQ", displayQuestion);
                 totalCorrect++;
                 console.log('You got it right!');
                 console.log('answerState has been set to: ' + answerState);
+                transitionScreen();
             } else {
                 if ($(this).text() !== questions[currentQuestion].correctAnswer){
                 answerState = 'incorrect';
                 totalIncorrect++;
                 console.log('You got it wrong');
+                transitionScreen();
                 }
             }
         })
@@ -61,7 +63,10 @@ $(".jumbotron").on("click", ".dQ", displayQuestion);
     function transitionScreen() {
         console.log('transition should be running');
         switch (answerState) {
-            case 'correct': alert('change screens');
+            case 'correct': 
+                $('#questionCard').empty();
+                $('#questionCard').html(`<h1>You got it right!</h2>`);
+                setTimeout(nextQuestion, 5000);
             break;
             case 'incorrect': //display incorrect answer screen;
             break;
@@ -73,11 +78,16 @@ $(".jumbotron").on("click", ".dQ", displayQuestion);
     function displayQuestion() {
             //Ask question
             i = questions[currentQuestion]
+            $('#questionCard').empty();
+            $('#questionCard').html(`
+                <h1 id="question"></h1>
+                <div id="choices"></h3>
+            `);            
             $('#question').text(i.question);
             console.log(i.question);
             shuffleArray(i.choices);
             for (j=0; j < i.choices.length; j++ ){
-                $('#question').append($('<h3 id="answerIndex' + j + '" class="answer"></h3>').text(i.choices[j]));
+                $('#choices').append($('<h3 id="answerIndex' + j + '" class="answer"></h3>').text(i.choices[j]));
             }
             console.log(i.choices);
             console.log(i.correctAnswer);
@@ -86,7 +96,7 @@ $(".jumbotron").on("click", ".dQ", displayQuestion);
 
    function nextQuestion() { 
        currentQuestion++
-       if (currentQuestion < (questions.length - 1)) {
+       if (currentQuestion < questions.length) {
             displayQuestion();
             if (currentTime < 0) {
                 //take input for answer and check to see if it is correct or not
