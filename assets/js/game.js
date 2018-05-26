@@ -50,12 +50,10 @@ $(document).ready(function(){
                 console.log('answerState has been set to: ' + answerState);
                 transitionScreen();
             } else {
-                if ($(this).text() !== questions[currentQuestion].correctAnswer){
                 answerState = 'incorrect';
                 totalIncorrect++;
                 console.log('You got it wrong');
                 transitionScreen();
-                }
             }
         })
     }
@@ -66,57 +64,56 @@ $(document).ready(function(){
             case 'correct': 
                 $('#questionCard').empty();
                 $('#questionCard').html(`<h1>You got it right!</h2>`);
-                setTimeout(nextQuestion, 5000);
             break;
             case 'incorrect': 
-            $('#questionCard').empty();
-            $('#questionCard').html(`<h1>You got it wrong!</h2>`);
-            setTimeout(nextQuestion, 5000);
+                $('#questionCard').empty();
+                $('#questionCard').html(`<h1>You got it wrong!</h2>`);
             break;
             case 'timeout': 
-            $('#questionCard').empty();
-            $('#questionCard').html(`<h1>Times up!</h2>`);
-            setTimeout(nextQuestion, 5000);
+                totalIncorrect++
+                $('#questionCard').empty();
+                $('#questionCard').html(`<h1>Times up!</h2>`);
             break;
         }
+        setTimeout(nextQuestion, 5000);
     }
 
     function displayQuestion() {
-            //Ask question
-            if (currentTime < 0 || currentTime === undefined) {
-                i = questions[currentQuestion]
-                $('#questionCard').empty();
-                $('#questionCard').html(`
-                    <h1 id="question"></h1>
-                    <div id="choices"></h3>
-                `);            
-                $('#question').text(i.question);
-                console.log(i.question);
-                shuffleArray(i.choices);
-                for (j=0; j < i.choices.length; j++ ){
-                    $('#choices').append($('<h3 id="answerIndex' + j + '" class="answer"></h3>').text(i.choices[j]));
-                }
-                console.log(i.choices);
-                console.log(i.correctAnswer);
-                evaluateAnswer();
-            } else {
-                answerState = 'timeout';
-                evaluateAnswer();
-                //go to timout screen
-                //start timer to go to next question
+        //Ask question
+        if (currentTime < 0 || currentTime === undefined) {
+            i = questions[currentQuestion]
+            $('#questionCard').empty();
+            $('#questionCard').html(`
+                <h1 id="question"></h1>
+                <div id="choices"></h3>
+            `);            
+            $('#question').text(i.question);
+            console.log(i.question);
+            shuffleArray(i.choices);
+            for (j=0; j < i.choices.length; j++ ){
+                $('#choices').append($('<h3 id="answerIndex' + j + '" class="answer"></h3>').text(i.choices[j]));
             }
-          
+            console.log(i.choices);
+            console.log(i.correctAnswer);
+            evaluateAnswer();
+        } else {
+            answerState = 'timeout';
+            evaluateAnswer();
+            //go to timout screen
+            //start timer to go to next question
         }
+          
+    }
 
-   function nextQuestion() { 
-       currentQuestion++
-       if (currentQuestion < questions.length) {
+    function nextQuestion() { 
+        currentQuestion++
+        if (currentQuestion < questions.length) {
             displayQuestion();       
         } else {
             $('#questionCard').empty();
             $('#questionCard').html('<h1>Game Over. Stats here soon.</h1>');
         }
-   };
+    };
 
 
     //functions to build
