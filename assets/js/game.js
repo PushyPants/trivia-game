@@ -4,6 +4,7 @@ $(document).ready(function(){
     let totalIncorrect = 0;
     let totalUnanswered = 0;
     let currentQuestion = 0;
+    let currentCorrectAnswer;
     let questionCountdown;
     let currentTime;
     let userAnswer;
@@ -42,38 +43,42 @@ $(document).ready(function(){
     shuffleArray(questions);
 
     function evaluateAnswer() {
+        //set the countdown timer to x
         currentTime = 10;
+        currentCorrectAnswer = questions[currentQuestion].correctAnswer;
         console.log(currentTime);
-        //Ask question
         questionCountdown = setInterval(function(){
             currentTime--;
-            if (currentTime > 0) {
-                $('#countdown').text(currentTime);
-                $('#questionCard').on('click', 'h3', function() {
-                    clearInterval(questionCountdown);
-                    console.log('You clicked: ' + $(this).text())
-                    console.log('Correct answer is: ' + questions[currentQuestion].correctAnswer)
-                    if ($(this).text() === questions[currentQuestion].correctAnswer){
-                        answerState = 'correct';
-                        totalCorrect++;
-                        console.log('You got it right!');
-                    console.log('answerState has been set to: ' + answerState);
-                    transitionScreen();
-                } else {
-                    answerState = 'incorrect';
-                    totalIncorrect++;
-                    console.log('You got it wrong');
-                    transitionScreen();
-                }
-            })
-        } else if (currentTime <= 0) {
+            $('#countdown').text(currentTime);
+            if (currentTime <= 0) {
+                clearInterval(questionCountdown);
+                $('#questionCard').off('click', 'h3')
+                answerState = 'timeout';
+                totalUnanswered++
+                transitionScreen();
+            }
+        }, 1000);
+            
+        $('#questionCard').on('click', 'h3', function() {
+            $('#questionCard').off('click', 'h3')
+            $('#countdown').text(currentTime);
             clearInterval(questionCountdown);
-            $('#countdown').text('times es up...')
-            answerState = 'timeout';
-            totalUnanswered++
-            transitionScreen();
-        }
-    }, 1000);
+            console.log('You clicked: ' + $(this).text())
+            console.log('Correct answer is: ' + currentCorrectAnswer)
+            if ($(this).text() === currentCorrectAnswer){
+                answerState = 'correct';
+                totalCorrect++;
+                console.log('You got it right!');
+                console.log('answerState has been set to: ' + answerState);
+                transitionScreen();
+            } else {
+                answerState = 'incorrect';
+                totalIncorrect++;
+                console.log('You got it wrong');
+                transitionScreen();
+            }
+        
+        })
     }
 
     function transitionScreen() {
@@ -88,9 +93,9 @@ $(document).ready(function(){
                 $('#questionCard').html(`<h1>You got it wrong!</h2>`);
             break;
             case 'timeout': 
-                $('#countdown').html(`<h3 id="countdown" class="card-title text-center">Times Up!</h3>`);
+                $('#countdown').text('Times Up');
                 $('#questionCard').empty();
-                $('#questionCard').html(`<h1>Times up!</h2>`);
+                $('#questionCard').html(`<h1>The answer we were looking for was: `+currentCorrectAnswer+`</h2>`);
             break;
         }
         setTimeout(nextQuestion, 5000);
