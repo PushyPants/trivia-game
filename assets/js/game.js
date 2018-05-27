@@ -13,20 +13,51 @@ $(document).ready(function(){
 
     var questions = [
         {
-            question: 'What is the distance from the earth to the Moon',
-            choices: ['238,900 miles', '403,262 miles','45,000 miles','50,000 miles'],
-            correctAnswer: '238,900 miles',            
+            question: `What is Michael Knight's original name?`,
+            choices: ['Michael King', 'Michael Day','Michael Long','Michael Selleck'],
+            correctAnswer: 'Michael Long',            
         },
         {
-            question: 'Which of these is not a fruit?',
-            choices: ['banana','apple','orange','rock'],
-            correctAnswer: 'rock',            
-        }
+            question: `What is the name of the actor that played Michael Knight?`,
+            choices: ['Tom Selleck', 'Burt Reynolds','David Hasselhoff','Mitch Buchannon'],
+            correctAnswer: 'David Hasselhoff',            
+        },
+        {
+            question: `What did K.I.T.T. stand for?`,
+            choices: ['Knight Industries Technical Team', 'Knight Industries Take Two','Knight Industries Two Thousand','Knight Industries Technical Trial'],
+            correctAnswer: 'Knight Industries Two Thousand',            
+        },
+        {
+            question: `What was the name of Michael Knight's boss?`,
+            choices: ['Miles Warwick', 'Miles Devon','Devon Miles','Warwick Miles'],
+            correctAnswer: 'Devon Miles',            
+        },
+        {
+            question: `What was the name of the actress who played Bonnie Barstow?`,
+            choices: ['Patricia McPherson', 'Ana Alicia','Heather Thomas','Charlene Tilton'],
+            correctAnswer: 'Patricia McPherson',            
+        },
+        {
+            question: `What model of car was K.I.T.T. based off of?`,
+            choices: ['Camaro', 'Trans AM','Fire Bird','GTO'],
+            correctAnswer: 'Trans AM',            
+        },
+        {
+            question: `What was the name of the upgrade that enabled KITT to drive more than 300mph?`,
+            choices: ['Oil Slick','Turbo Boost','High Tractor Drop Downs','Super Pursuit Mode'],
+            correctAnswer: 'Super Pursuit Mode',            
+        },
+        {
+            question: `On what US network did Knight Rider air?`,
+            choices: ['NBC','ABC','CBS','FOX'],
+            correctAnswer: 'NBC',            
+        },
+        {
+            question: `During what years did the show air?`,
+            choices: ['1983-1987','1982-1986','1981-1985','1984-1988'],
+            correctAnswer: '1982-1986',            
+        }       
     ]
-    // setInterval(function(){
-    //     counter++;
-    //     $('#counter').text(counter);
-    // },1000)
 
     $(".jumbotron").on("click", ".dQ", displayQuestion);
     
@@ -85,15 +116,23 @@ $(document).ready(function(){
         console.log('transition should be running');
         switch (answerState) {
             case 'correct': 
+                $('#countdown').text('Good Job!');
+                $('#correctHeader').html('<h3>Right: '+ totalCorrect + '</h3>');
                 $('#questionCard').empty();
-                $('#questionCard').html(`<h1>You got it right!</h2>`);
+                $('#questionCard').html(`
+                <div><h2>You got it right!</h2></div>
+                <div class="transitionImg mx-auto"><img src="assets/images/kittTalking.gif" /></div>
+                `);
             break;
             case 'incorrect': 
+                $('#countdown').text('Whomp whomp');
+                $('#incorrectHeader').html('<h3>Wrong: ' + (totalIncorrect + totalUnanswered) + '</h3>');
                 $('#questionCard').empty();
                 $('#questionCard').html(`<h1>You got it wrong!</h2>`);
             break;
             case 'timeout': 
                 $('#countdown').text('Times Up');
+                $('#incorrectHeader').html('<h3>Wrong: ' + (totalIncorrect + totalUnanswered) + '</h3>');
                 $('#questionCard').empty();
                 $('#questionCard').html(`<h1>The answer we were looking for was: `+currentCorrectAnswer+`</h2>`);
             break;
@@ -124,8 +163,14 @@ $(document).ready(function(){
         if (currentQuestion < questions.length) {
             displayQuestion();       
         } else {
+            $('#headerRow').empty();
             $('#questionCard').empty();
-            $('#questionCard').html('<h1>Game Over. Stats here soon.</h1>');
+            $('#questionCard').html(`
+            <div><h1>Game Over!</h1></div>
+            <div><h3>Correct answers: `+totalCorrect+`</h3></div>
+            <div><h3>Wrong Answers: `+totalIncorrect+`</h3></div>
+            <div><h3>Unaswered: `+totalUnanswered+`</h3></div>
+            `);
         }
     };
 
