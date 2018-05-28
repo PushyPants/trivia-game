@@ -59,6 +59,10 @@ $(document).ready(function(){
         }       
     ]
 
+    var badSounds = [];
+    var goodSounds = [];
+    var musicTracks = [];
+
     $(".jumbotron").on("click", ".dQ", displayQuestion);
     
     //Create function to shuffle arrays. to be used in suffling the question order & also each questions answer order.
@@ -70,6 +74,11 @@ $(document).ready(function(){
             array[j] = temp;
         }
     }
+
+    function randomSound(soundArray) {
+        let soundFile = soundArray[Math.floor(Math.random() * soundArray.length)]
+        howls[soundFile].play();
+    };
     
     shuffleArray(questions);
 
