@@ -7,6 +7,7 @@ $(document).ready(function(){
     let currentCorrectAnswer;
     let questionCountdown;
     let currentTime;
+    let sound;
     let userAnswer;
     let answerState;
     let counter = 0;
@@ -59,9 +60,21 @@ $(document).ready(function(){
         }       
     ]
 
-    var badSounds = [];
+    var badSounds = ['bad-1','bad-2','bad-3'];
     var goodSounds = [];
     var musicTracks = [];
+
+    function generateSound(soundType) {
+        shuffleArray(soundType);
+        console.log(soundType[0]);
+        sound = new Howl({
+            src: [`assets/sounds/`+soundType[0]+`.mp3`]
+        });
+        console.log(sound);
+    };
+      
+    
+    
 
     $(".jumbotron").on("click", ".dQ", displayQuestion);
     
@@ -134,6 +147,9 @@ $(document).ready(function(){
                 `);
             break;
             case 'incorrect': 
+                generateSound(badSounds);
+                sound.play();
+                console.log(badSounds[0]);
                 $('#countdown').text('Whomp whomp');
                 $('#incorrectHeader').html('<h3>Wrong: ' + (totalIncorrect + totalUnanswered) + '</h3>');
                 $('#questionCard').empty();
