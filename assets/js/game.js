@@ -61,14 +61,14 @@ $(document).ready(function(){
     ]
 
     var badSounds = ['bad-1','bad-2','bad-3'];
-    var goodSounds = [];
-    var musicTracks = [];
+    var goodSounds = ['good-1'];
+    var musicTracks = ['song-1','song-2'];
 
-    function generateSound(soundType) {
-        shuffleArray(soundType);
-        console.log(soundType[0]);
+    function generateSound(soundArray) {
+        shuffleArray(soundArray);
+        console.log(soundArray[0]);
         sound = new Howl({
-            src: [`assets/sounds/`+soundType[0]+`.mp3`]
+            src: [`assets/sounds/`+soundArray[0]+`.mp3`]
         });
         console.log(sound);
     };
@@ -138,6 +138,8 @@ $(document).ready(function(){
         console.log('transition should be running');
         switch (answerState) {
             case 'correct': 
+                generateSound(goodSounds);
+                sound.play();
                 $('#countdown').text('Good Job!');
                 $('#correctHeader').html('<h3>Right: '+ totalCorrect + '</h3>');
                 $('#questionCard').empty();
@@ -156,6 +158,8 @@ $(document).ready(function(){
                 $('#questionCard').html(`<h1>You got it wrong!</h2>`);
             break;
             case 'timeout': 
+            generateSound(badSounds);
+            sound.play();
                 $('#countdown').text('Times Up');
                 $('#incorrectHeader').html('<h3>Wrong: ' + (totalIncorrect + totalUnanswered) + '</h3>');
                 $('#questionCard').empty();
