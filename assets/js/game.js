@@ -74,9 +74,9 @@ $(document).ready(function(){
     };
       
     
-    
+    displayQuestion();
 
-    $(".jumbotron").on("click", ".dQ", displayQuestion);
+    //$(window).one("click", displayQuestion);
     
     //Create function to shuffle arrays. to be used in suffling the question order & also each questions answer order.
     function shuffleArray(array) {
@@ -97,7 +97,7 @@ $(document).ready(function(){
 
     function evaluateAnswer() {
         //set the countdown timer to x
-        currentTime = 10;
+        currentTime = 30;
         currentCorrectAnswer = questions[currentQuestion].correctAnswer;
         console.log(currentTime);
         questionCountdown = setInterval(function(){
@@ -141,10 +141,10 @@ $(document).ready(function(){
                 generateSound(goodSounds);
                 sound.play();
                 $('#countdown').text('Good Job!');
-                $('#correctHeader').html('<h3>Right: '+ totalCorrect + '</h3>');
+                $('#correctHeader').html('<h5>Right: '+ totalCorrect + '</h5>');
                 $('#questionCard').empty();
                 $('#questionCard').html(`
-                <div><h2>You got it right!</h2></div>
+                <div><h3>You got it right!</h3></div>
                 <div class="transitionImg mx-auto"><img src="assets/images/kittTalking.gif" /></div>
                 `);
             break;
@@ -153,17 +153,17 @@ $(document).ready(function(){
                 sound.play();
                 console.log(badSounds[0]);
                 $('#countdown').text('Whomp whomp');
-                $('#incorrectHeader').html('<h3>Wrong: ' + (totalIncorrect + totalUnanswered) + '</h3>');
+                $('#incorrectHeader').html('<h5>Wrong: ' + (totalIncorrect + totalUnanswered) + '</h5>');
                 $('#questionCard').empty();
-                $('#questionCard').html(`<h1>You got it wrong!</h2>`);
+                $('#questionCard').html(`<h3>You got it wrong!</h3>`);
             break;
             case 'timeout': 
             generateSound(badSounds);
             sound.play();
                 $('#countdown').text('Times Up');
-                $('#incorrectHeader').html('<h3>Wrong: ' + (totalIncorrect + totalUnanswered) + '</h3>');
+                $('#incorrectHeader').html('<h5>Wrong: ' + (totalIncorrect + totalUnanswered) + '</h5>');
                 $('#questionCard').empty();
-                $('#questionCard').html(`<h1>The answer we were looking for was: `+currentCorrectAnswer+`</h2>`);
+                $('#questionCard').html(`<h3>The answer we were looking for was: `+currentCorrectAnswer+`</h3>`);
             break;
         }
         setTimeout(nextQuestion, 5000);

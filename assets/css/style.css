@@ -1,0 +1,27 @@
+/* body {
+    background-color: #2A7CAC;
+}
+
+.tvBg {
+    height: 100vh;
+    min-height: 100%;
+    max-height:100%;
+    width: 100vw;
+    min-width: 100%;
+    max-width: 100%;
+    background: url('../images/tvBg.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.tv-card{
+    position: relative;
+    height: 500;
+    top: 160px;
+    width: 575px;
+    left: -100px;
+}
+
+.card ,.cardHeader {
+    background: transparent;
+} */

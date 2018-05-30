@@ -14,29 +14,27 @@
       <script src="assets/js/game.js"></script>
 </head>
 <body>
-    <div class="jumbotron mx-auto">
-        <h1 class="text-center">Welcome to Push's Trivia Game!</h1>
-        <h2 class="text-center">You will have 30 seconds to answer each question. good luck!</h2>
-        <p class="text-center"><button id="displayQuestion" type="button" class="btn btn-primary mx-auto dQ">Load Question</button></p>
-      </div>
-    
+    <div class="tvBg">
+      
+      
       <div class="container">
-    
-          <div class="card">
-            <div class="card-header">
-              <div class="headerRow row">
-                <div id="correctHeader" class="col-md-2 text-left"></div>
-                <div id="countdownHeader" class="col-md-8 text-center">
-                  <h3 id="countdown" class="card-title text-center">Trivia</h3>
-                </div>
-                <div id="incorrectHeader" class="col-md-2 text-right"></div>
+        
+        <div class="tv-card card mx-auto">
+          <div class="card-header">
+            <div class="headerRow row">
+              <div id="correctHeader" class="col-md-4 text-left"></div>
+              <div id="countdownHeader" class="col-md-4 text-center">
+                <h3 id="countdown" class="card-title text-center">Trivia</h3>
               </div>
+              <div id="incorrectHeader" class="col-md-4 text-right"></div>
             </div>
-            <div id="questionCard" class="card-body text-center">
-              <h1 id="question"></h1>
-              <div id="choices"></h3>
+          </div>
+          <div id="questionCard" class="card-body text-center">
+            <h1 id="question"></h1>
+            <div id="choices"></h3>
             </div>
           </div>     
-      </div>
-</body>
+        </div>
+    </div>
+      </body>
 </html>
