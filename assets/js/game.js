@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+    
     let totalCorrect = 0;
     let totalIncorrect = 0;
     let totalUnanswered = 0;
@@ -64,6 +64,8 @@ $(document).ready(function(){
     var goodSounds = ['good-1'];
     var musicTracks = ['song-1','song-2'];
 
+    gameStart();
+
     function generateSound(soundArray) {
         shuffleArray(soundArray);
         console.log(soundArray[0]);
@@ -73,12 +75,28 @@ $(document).ready(function(){
         console.log(sound);
     };
       
-    
-    displayQuestion();
+    function gameStart() {
+        $('#countdown').text('Knight Rider');
+        $('#correctHeader').empty();
+        $('#questionCard').empty();
+        $('#questionCard').html(`
+        <div class="gameStart"><h3>Welcome to Knight Rider Trivia!</h3></div>
+        <div class="gameStart"><h2>You will have 30 seconds to answer each question.</h2></div>
+        <div class="gameStart"><h2>Press start when ready!</h2></div>
+        <button id="startButton" class="btn btn-danger">Start</button>
+        `);
+        $('#startButton').on('click',displayQuestion)
+    }
 
-    //$(window).one("click", displayQuestion);
-    
-    //Create function to shuffle arrays. to be used in suffling the question order & also each questions answer order.
+    function restart() {
+        currentQuestion = 0;
+        totalCorrect = 0;
+        totalIncorrect = 0;
+        totalUnanswered = 0;$('#correctHeader').empty();
+        totalUnanswered = 0;$('#incorrectHeader').empty();
+        displayQuestion();  
+    }
+
     function shuffleArray(array) {
         for (var i = array.length - 1; i > 0; i--) {
             var j = Math.floor(Math.random() * (i + 1));
@@ -93,8 +111,6 @@ $(document).ready(function(){
         howls[soundFile].play();
     };
     
-    shuffleArray(questions);
-
     function evaluateAnswer() {
         //set the countdown timer to x
         currentTime = 30;
@@ -170,6 +186,7 @@ $(document).ready(function(){
     }
 
     function displayQuestion() {
+        shuffleArray(questions);
         i = questions[currentQuestion]
         $('#questionCard').empty();
         $('#questionCard').html(`
@@ -199,36 +216,14 @@ $(document).ready(function(){
             <div><h3>Correct answers: `+totalCorrect+`</h3></div>
             <div><h3>Wrong Answers: `+totalIncorrect+`</h3></div>
             <div><h3>Unaswered: `+totalUnanswered+`</h3></div>
+            <div class="gameStart"><h2>Press Start Over to try again!</h2></div>
+            <button id="startButton" class="btn btn-danger">Start Over</button>
             `);
+            $('#startButton').on('click', function() {
+                restart();  
+            })
+            
         }
     };
-
-
-    //functions to build
-        //updateQuestionDOM()
-        //setTimer(timeAmt)
-        //check/display answer
-            //either one that covers all.... (ie. checkAnswerState() then switch/case) or
-                //if correct
-                //if incorrect
-                //if timeout
-        //check gameState
-
-
-
-    //function runQuestion() 
-        //pull question
-        //set timer/start countdown
-            //if timeout
-                //reveal right answer
-                //set incorrect var + 1
-                //start nextQuestion timer
-                    //move on to next question
-            //if correct
-                //display correct window
-                //set correct answer to + 1
-
-  
-
 
 })

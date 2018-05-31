@@ -91,6 +91,23 @@ body {
     color: white;
 }
 
-.card-body h3:hover {
+h3.answer:hover {
     color: #acdd4d;
+}
+
+.gameStart h3 {
+    font-family: ruben;
+    font-size: 3rem;
+    color: white;
+}
+
+.gameStart h2 {
+    font-size: 2rem;
+    color: white;
+}
+
+#startButton {
+    margin-top: 30px;
+    font-family: ruben;
+    font-size: 2rem;
 }
