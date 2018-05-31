@@ -1,0 +1,88 @@
+
+@font-face {
+    font-family: digi;
+    src: url(../fonts/DS-DIGI.TTF);
+}
+
+@font-face {
+    font-family: ruben;
+    src: url(../fonts/RUBEN.TTF);
+}
+
+.card-header h1, .card-header h2, .card-header h3, .card-header h4, .card-header h5 {
+    font-family: digi;
+    color: #ACDD4D;
+}
+
+
+
+body {
+    background-color: #222222;
+    background: url('https://hansdc.files.wordpress.com/2011/10/knight-rider-by-luis-gispert.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.jumbotron {
+    background-color: rgba(34,34,34,.5);
+    border-bottom: 2px solid white;
+    padding: 30px 32px;
+}
+
+.jumbotron h1 {
+    font-family: ruben;
+    color: white;
+    line-height: 4rem;
+    font-size: 5rem;
+}
+
+.card {
+    border: 2px solid white;
+    min-height: 500px;
+}
+
+.card, .card-header, .card-body {
+    background-color: rgba(34,34,34,.5);
+}
+
+.card-header {
+    border-bottom: 2px solid white;
+}
+
+.card-header h3 {
+    font-size: 3rem;
+}
+
+.card-header h5 {
+    font-size: 2rem;
+}
+
+.card-body h1 {
+    font-family: ruben;
+    color: white;
+}
+
+.card-body h3 {
+    color: white;
+}
+
+h3.answer:hover {
+    color: #acdd4d;
+}
+
+.gameStart h3 {
+    font-family: ruben;
+    font-size: 3rem;
+    color: white;
+}
+
+.gameStart h2 {
+    font-size: 2rem;
+    color: white;
+}
+
+.startButton {
+    margin-top: 30px;
+    font-family: ruben;
+    font-size: 2rem;
+}
