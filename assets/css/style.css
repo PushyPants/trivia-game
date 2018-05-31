@@ -109,7 +109,7 @@ h3.answer:hover {
     color: white;
 }
 
-#startButton {
+.startButton {
     margin-top: 30px;
     font-family: ruben;
     font-size: 2rem;

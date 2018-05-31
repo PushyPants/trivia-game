@@ -4,6 +4,8 @@ $(document).ready(function(){
     let totalIncorrect = 0;
     let totalUnanswered = 0;
     let currentQuestion = 0;
+    let tvShow;
+    let qIndex;
     let currentCorrectAnswer;
     let questionCountdown;
     let currentTime;
@@ -13,51 +15,70 @@ $(document).ready(function(){
     let counter = 0;
 
     var questions = [
-        {
-            question: `What is Michael Knight's original name?`,
-            choices: ['Michael King', 'Michael Day','Michael Long','Michael Selleck'],
-            correctAnswer: 'Michael Long',            
-        },
-        {
-            question: `What is the name of the actor that played Michael Knight?`,
-            choices: ['Tom Selleck', 'Burt Reynolds','David Hasselhoff','Mitch Buchannon'],
-            correctAnswer: 'David Hasselhoff',            
-        },
-        {
-            question: `What did K.I.T.T. stand for?`,
-            choices: ['Knight Industries Technical Team', 'Knight Industries Take Two','Knight Industries Two Thousand','Knight Industries Technical Trial'],
-            correctAnswer: 'Knight Industries Two Thousand',            
-        },
-        {
-            question: `What was the name of Michael Knight's boss?`,
-            choices: ['Miles Warwick', 'Miles Devon','Devon Miles','Warwick Miles'],
-            correctAnswer: 'Devon Miles',            
-        },
-        {
-            question: `What was the name of the actress who played Bonnie Barstow?`,
-            choices: ['Patricia McPherson', 'Ana Alicia','Heather Thomas','Charlene Tilton'],
-            correctAnswer: 'Patricia McPherson',            
-        },
-        {
-            question: `What model of car was K.I.T.T. based off of?`,
-            choices: ['Camaro', 'Trans AM','Fire Bird','GTO'],
-            correctAnswer: 'Trans AM',            
-        },
-        {
-            question: `What was the name of the upgrade that enabled KITT to drive more than 300mph?`,
-            choices: ['Oil Slick','Turbo Boost','High Tractor Drop Downs','Super Pursuit Mode'],
-            correctAnswer: 'Super Pursuit Mode',            
-        },
-        {
-            question: `On what US network did Knight Rider air?`,
-            choices: ['NBC','ABC','CBS','FOX'],
-            correctAnswer: 'NBC',            
-        },
-        {
-            question: `During what years did the show air?`,
-            choices: ['1983-1987','1982-1986','1981-1985','1984-1988'],
-            correctAnswer: '1982-1986',            
-        }       
+        {knight_rider:[
+            {
+                question: `What is Michael Knight's original name?`,
+                choices: ['Michael King', 'Michael Day','Michael Long','Michael Selleck'],
+                correctAnswer: 'Michael Long',            
+            },
+            {
+                question: `What is the name of the actor that played Michael Knight?`,
+                choices: ['Tom Selleck', 'Burt Reynolds','David Hasselhoff','Mitch Buchannon'],
+                correctAnswer: 'David Hasselhoff',            
+            },
+            {
+                question: `What did K.I.T.T. stand for?`,
+                choices: ['Knight Industries Technical Team', 'Knight Industries Take Two','Knight Industries Two Thousand','Knight Industries Technical Trial'],
+                correctAnswer: 'Knight Industries Two Thousand',            
+            },
+            {
+                question: `What was the name of Michael Knight's boss?`,
+                choices: ['Miles Warwick', 'Miles Devon','Devon Miles','Warwick Miles'],
+                correctAnswer: 'Devon Miles',            
+            },
+            {
+                question: `What was the name of the actress who played Bonnie Barstow?`,
+                choices: ['Patricia McPherson', 'Ana Alicia','Heather Thomas','Charlene Tilton'],
+                correctAnswer: 'Patricia McPherson',            
+            },
+            {
+                question: `What model of car was K.I.T.T. based off of?`,
+                choices: ['Camaro', 'Trans AM','Fire Bird','GTO'],
+                correctAnswer: 'Trans AM',            
+            },
+            {
+                question: `What was the name of the upgrade that enabled KITT to drive more than 300mph?`,
+                choices: ['Oil Slick','Turbo Boost','High Tractor Drop Downs','Super Pursuit Mode'],
+                correctAnswer: 'Super Pursuit Mode',            
+            },
+            {
+                question: `On what US network did Knight Rider air?`,
+                choices: ['NBC','ABC','CBS','FOX'],
+                correctAnswer: 'NBC',            
+            },
+            {
+                question: `During what years did the show air?`,
+                choices: ['1983-1987','1982-1986','1981-1985','1984-1988'],
+                correctAnswer: '1982-1986',            
+            }   
+        ]},
+        {a_team:[
+            {
+                question: `In the United States of America, the "A-team" ran for 4 years during the 80s. But, which years?`,
+                choices: ['1984-1988','1981-1985','1983-1987','1985-1989'],
+                correctAnswer: '1983-1987',            
+            },
+            {
+                question: `The leader of the team was "Hannibal" Smith. Who played him?`,
+                choices: ['Dirk Benedict','Dwight Schultz','Mr. T','George Peppard'],
+                correctAnswer: 'George Peppard',            
+            },
+            {
+                question: `One of the characters had a huge fear: flying! Which one?`,
+                choices: ['Murdock','Face','Hannibal','B.A. Barracus'],
+                correctAnswer: 'B.A. Barracus',            
+            },
+        ]}    
     ]
 
     var badSounds = ['bad-1','bad-2','bad-3'];
@@ -76,16 +97,33 @@ $(document).ready(function(){
     };
       
     function gameStart() {
-        $('#countdown').text('Knight Rider');
+        $('#countdown').text('Pick your TV Show!');
         $('#correctHeader').empty();
+        $('#incorrectHeader').empty();
         $('#questionCard').empty();
         $('#questionCard').html(`
-        <div class="gameStart"><h3>Welcome to Knight Rider Trivia!</h3></div>
+        <div class="gameStart"><h3>Welcome to 80s TV Trivia!</h3></div>
+        <br>
+        <div class="gameStart"><h2>Pick the TV show you'd like to play!</h2></div>
+        <br>
         <div class="gameStart"><h2>You will have 30 seconds to answer each question.</h2></div>
         <div class="gameStart"><h2>Press start when ready!</h2></div>
-        <button id="startButton" class="btn btn-danger">Start</button>
+        <button class="btn btn-danger startButton" value="a_team">A-Team</button>
+        <button class="btn btn-danger startButton" value="knight_rider">Knight Rider</button>
         `);
-        $('#startButton').on('click',displayQuestion)
+        $('.startButton').on('click', function(){
+            tvShow = $(this).val();
+            switch (tvShow) {
+                case 'knight_rider': qIndex = questions[0].knight_rider;
+                break;
+                case 'a_team': qIndex = questions[1].a_team;
+                break;
+            }
+            console.log(tvShow)
+            shuffleArray(qIndex);
+            console.log(qIndex)
+            displayQuestion();
+        })
     }
 
     function restart() {
@@ -94,7 +132,7 @@ $(document).ready(function(){
         totalIncorrect = 0;
         totalUnanswered = 0;$('#correctHeader').empty();
         totalUnanswered = 0;$('#incorrectHeader').empty();
-        displayQuestion();  
+        gameStart();  
     }
 
     function shuffleArray(array) {
@@ -114,7 +152,7 @@ $(document).ready(function(){
     function evaluateAnswer() {
         //set the countdown timer to x
         currentTime = 30;
-        currentCorrectAnswer = questions[currentQuestion].correctAnswer;
+        currentCorrectAnswer = qIndex[currentQuestion].correctAnswer;
         console.log(currentTime);
         questionCountdown = setInterval(function(){
             currentTime--;
@@ -186,8 +224,8 @@ $(document).ready(function(){
     }
 
     function displayQuestion() {
-        shuffleArray(questions);
-        i = questions[currentQuestion]
+        
+        i = qIndex[currentQuestion];
         $('#questionCard').empty();
         $('#questionCard').html(`
             <h1 id="question"></h1>
@@ -206,7 +244,8 @@ $(document).ready(function(){
 
     function nextQuestion() { 
         currentQuestion++
-        if (currentQuestion < questions.length) {
+        console.log('Question Index is: '+currentQuestion)
+        if (currentQuestion < qIndex.length) {
             displayQuestion();       
         } else {
             $('#headerRow').empty();
