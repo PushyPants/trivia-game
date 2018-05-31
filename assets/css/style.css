@@ -46,10 +46,13 @@
 
 body {
     background-color: #222222;
+    background: url('https://hansdc.files.wordpress.com/2011/10/knight-rider-by-luis-gispert.jpg');
+    background-position: center;
+    background-size: cover;
 }
 
 .jumbotron {
-    background-color: #222;
+    background-color: rgba(34,34,34,.5);
     border-bottom: 2px solid white;
     padding: 30px 32px;
 }
@@ -67,7 +70,7 @@ body {
 }
 
 .card, .card-header, .card-body {
-    background-color: #222;
+    background-color: rgba(34,34,34,.5);
 }
 
 .card-header {
