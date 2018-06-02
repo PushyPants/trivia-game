@@ -132,7 +132,7 @@ $(document).ready(function(){
     var badSounds = ['bad-1','bad-2','bad-3'];
     var goodSounds = ['good-1'];
     var musicTracks = ['song-1','song-2'];
-
+    
     gameStart();
 
     function generateSound(soundArray) {

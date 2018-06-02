@@ -88,3 +88,7 @@ h3.answer:hover {
     font-family: ruben;
     font-size: 2rem;
 }
+
+.transitionImg img {
+    border-radius: 50%;
+}
