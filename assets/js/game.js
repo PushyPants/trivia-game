@@ -18,8 +18,8 @@ $(document).ready(function(){
     var questions = [
         {knight_rider:[
             {
-                goodGif: [],
-                badGif: [],
+                goodGif: ['','k-good-1','k-good-2','k-good-3'],
+                badGif: ['','k-bad-1','k-bad-2'],
                 goodSound: [],
                 badsound:[],
             },
@@ -71,8 +71,8 @@ $(document).ready(function(){
         ]},
         {a_team:[
             {
-                goodGif: [],
-                badGif: [],
+                goodGif: ['','a-good-1','a-good-2'],
+                badGif: ['','a-bad-1','a-bad-2'],
                 goodSound: [],
                 badsound:[],
             },
@@ -136,7 +136,7 @@ $(document).ready(function(){
     gameStart();
 
     function generateSound(soundArray) {
-        shuffleArray(soundArray, 0);
+        shuffleArray(soundArray);
         console.log(soundArray[0]);
         sound = new Howl({
             src: [`assets/sounds/`+soundArray[0]+`.mp3`]
@@ -185,7 +185,7 @@ $(document).ready(function(){
                 $(this).fadeIn('slow');
             })
             console.log(tvShow)
-            shuffleArray(qIndex,1);
+            shuffleArray(qIndex);
             console.log(qIndex)
             displayQuestion();
         })
@@ -206,8 +206,8 @@ $(document).ready(function(){
         gameStart();  
     }
 
-    function shuffleArray(array, index) {
-        for (var i = array.length - 1; i > index; i--) {
+    function shuffleArray(array) {
+        for (var i = array.length - 1; i > 0; i--) {
             var j = Math.floor(Math.random() * (i + 1));
             if(j===0){j+=1} else {j};
             var temp = array[i];
@@ -269,9 +269,11 @@ $(document).ready(function(){
                 $('#countdown').text('Good Job!');
                 $('#correctHeader').html('<h5>Right: '+ totalCorrect + '</h5>');
                 $('#questionCard').empty();
+                shuffleArray(qIndex[0].goodGif);
+                console.log(qIndex[0].goodGif);
                 $('#questionCard').html(`
                 <div><h3>You got it right!</h3></div>
-                <div class="transitionImg mx-auto"><img src="assets/images/kittTalking.gif" /></div>
+                <div class="transitionImg mx-auto"><img src="assets/images/`+qIndex[0].goodGif[1]+`.gif" /></div>
                 `);
             break;
             case 'incorrect': 
@@ -281,7 +283,11 @@ $(document).ready(function(){
                 $('#countdown').text('Whomp whomp');
                 $('#incorrectHeader').html('<h5>Wrong: ' + (totalIncorrect + totalUnanswered) + '</h5>');
                 $('#questionCard').empty();
-                $('#questionCard').html(`<h3>You got it wrong!</h3>`);
+                shuffleArray(qIndex[0].badGif);
+                $('#questionCard').html(`
+                <div><h3>You got it wrong!</h3></div>
+                <div class="transitionImg mx-auto"><img src="assets/images/`+qIndex[0].badGif[1]+`.gif" /></div>
+                `);
             break;
             case 'timeout': 
             generateSound(badSounds);
@@ -289,7 +295,11 @@ $(document).ready(function(){
                 $('#countdown').text('Times Up');
                 $('#incorrectHeader').html('<h5>Wrong: ' + (totalIncorrect + totalUnanswered) + '</h5>');
                 $('#questionCard').empty();
-                $('#questionCard').html(`<h3>The answer we were looking for was: `+currentCorrectAnswer+`</h3>`);
+                shuffleArray(qIndex[0].badGif);
+                $('#questionCard').html(`
+                <div><h3>The answer we were looking for was: `+currentCorrectAnswer+`</h3></div>
+                <div class="transitionImg mx-auto"><img src="assets/images/`+qIndex[0].badGif[1]+`.gif" /></div>
+                `);
             break;
         }
         setTimeout(nextQuestion, 5000);
@@ -305,7 +315,7 @@ $(document).ready(function(){
         `);            
         $('#question').text(i.question);
         console.log(i.question);
-        shuffleArray(i.choices,0);
+        shuffleArray(i.choices);
         for (j=0; j < i.choices.length; j++ ){
             $('#choices').append($('<h3 id="answerIndex' + j + '" class="answer"></h3>').text(i.choices[j]));
         }
