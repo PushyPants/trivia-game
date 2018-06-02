@@ -134,10 +134,12 @@ $(document).ready(function(){
       
     function gameStart() {
         $('#questionCard').empty();
-        $('#questionCard').css({
-            
-            'background': `url('https://media1.giphy.com/media/26tPbLsr9oE72erjG/giphy.gif')`,
-            'z-index':'-1',
+        $('#tvBg').ready(function(){
+            $('#questionCard').css({
+                
+                'background': `url('https://media1.giphy.com/media/26tPbLsr9oE72erjG/giphy.gif')`,
+                'z-index':'-1',
+            });
         });
         
         setTimeout( function() {

@@ -86,7 +86,7 @@ h1, h2, h3, h4, h5 {
     }
 
     h3 {
-        font-size: 22px;
+        font-size: 20px;
     }
 
     h2 {
@@ -114,9 +114,9 @@ h1, h2, h3, h4, h5 {
     .tv-card{
         position: relative;
         height: 500;
-        top: 150px;
+        top: 95px;
         width: 600px;
-        left: -100px;
+        left: -85px;
     }
 
     #questionCard {
