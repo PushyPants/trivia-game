@@ -4,6 +4,7 @@ $(document).ready(function(){
     let totalIncorrect = 0;
     let totalUnanswered = 0;
     let currentQuestion = 0;
+    let gameTitle;
     let tvShow;
     let qIndex;
     let currentCorrectAnswer;
@@ -78,6 +79,41 @@ $(document).ready(function(){
                 choices: ['Murdock','Face','Hannibal','B.A. Barracus'],
                 correctAnswer: 'B.A. Barracus',            
             },
+            {
+                question: `The team had a special black van with red ailerons. What model was it?`,
+                choices: ['A-series','F-series','G-series','W-series'],
+                correctAnswer: 'G-series',            
+            },
+            {
+                question: `What does the A in "A-team" stand for?`,
+                choices: ['Alpha','Astonishing','Amazing','Annoying'],
+                correctAnswer: 'Alpha',            
+            },
+            {
+                question: `What was Hannibal's favourite quote?`,
+                choices: ["He's on the jazz!",'Who am I?','Shut up fool!','I love it when a plan comes together!'],
+                correctAnswer: 'I love it when a plan comes together!',            
+            },
+            {
+                question: `How come the A-Team was running from the military?`,
+                choices: ['they stole military machinery','they left the military before they were supposed to','they told military secrets to the Government',`they were framed for a crime they didn't commit`],
+                correctAnswer: `they were framed for a crime they didn't commit`,            
+            },
+            {
+                question: `What does the "H.M.", stand for in Capt. H.M. Murdock?`,
+                choices: [`Here's Murdock`,'Hero Man','Howling Maniac','Howling Mad'],
+                correctAnswer: 'Howling Mad',            
+            },
+            {
+                question: `What does the real "B.A." stand for in Sgt. B.A. Baracus?`,
+                choices: ['Bosco AlbertBad Albert','Beanie Albert','Big Albert','Bosco Albert'],
+                correctAnswer: 'Bosco Albert',            
+            },
+            {
+                question: `Which team member goes by many different aliases?`,
+                choices: ['Hannibal','Murdock','BA','Face'],
+                correctAnswer: 'Face',            
+            },
         ]}    
     ]
 
@@ -97,33 +133,51 @@ $(document).ready(function(){
     };
       
     function gameStart() {
+        $('#questionCard').empty();
+        $('#questionCard').css({
+            
+            'background': `url('https://media1.giphy.com/media/26tPbLsr9oE72erjG/giphy.gif')`,
+            'z-index':'-1',
+        });
+        
+        setTimeout( function() {
+        $('#questionCard').css({'background': "url()",'z-index':'1'});
         $('#countdown').text('Pick your TV Show!');
         $('#correctHeader').empty();
         $('#incorrectHeader').empty();
         $('#questionCard').empty();
         $('#questionCard').html(`
-        <div class="gameStart"><h3>Welcome to 80s TV Trivia!</h3></div>
+        <div class="gameStart"><h1>Welcome to 80s TV Trivia!</h1></div>
         <br>
-        <div class="gameStart"><h2>Pick the TV show you'd like to play!</h2></div>
+        <div class="gameStart"><h3>You will have 30 seconds to answer each question.</h3></div>
         <br>
-        <div class="gameStart"><h2>You will have 30 seconds to answer each question.</h2></div>
-        <div class="gameStart"><h2>Press start when ready!</h2></div>
+        <div class="gameStart"><h2>Pick the VHS you want to play!</h2></div>
         <button class="btn btn-danger startButton" value="a_team">A-Team</button>
         <button class="btn btn-danger startButton" value="knight_rider">Knight Rider</button>
         `);
+
         $('.startButton').on('click', function(){
             tvShow = $(this).val();
+            gameTitle = $(this).text();
+            $('#gameTitle').text(gameTitle);
             switch (tvShow) {
-                case 'knight_rider': qIndex = questions[0].knight_rider;
+                case 'knight_rider': 
+                    qIndex = questions[0].knight_rider;
                 break;
                 case 'a_team': qIndex = questions[1].a_team;
                 break;
             }
+            $('body').fadeOut(function(){
+                $('#customStyle').attr('href','assets/css/'+tvShow+'.css');
+                $(this).fadeIn('slow');
+            })
             console.log(tvShow)
             shuffleArray(qIndex);
             console.log(qIndex)
             displayQuestion();
         })
+        },700);
+
     }
 
     function restart() {
@@ -132,6 +186,10 @@ $(document).ready(function(){
         totalIncorrect = 0;
         totalUnanswered = 0;$('#correctHeader').empty();
         totalUnanswered = 0;$('#incorrectHeader').empty();
+        $('body').fadeOut(function(){
+            $('#customStyle').attr('href','assets/css/style.css');
+            $(this).fadeIn('slow');
+        })
         gameStart();  
     }
 

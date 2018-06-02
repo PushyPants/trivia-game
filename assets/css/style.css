@@ -3,10 +3,6 @@
     src: url(../fonts/VCR_OSD_MONO_1.001.ttf);
 }
 
-h1, h2, h3, h4, h5 {
-    font-family: vcr;
-    color: white;
-}
 
 body {
     background-color: #2A7CAC;
@@ -24,13 +20,6 @@ body {
     background-position: center;
 }
 
-.tv-card{
-    position: relative;
-    height: 500;
-    top: 160px;
-    width: 585px;
-    left: -100px;
-}
 
 .card ,.cardHeader {
     background: transparent;
@@ -43,3 +32,96 @@ body {
 .card-header {
     display: none;
 }
+
+.startButton {
+    font-family: vcr;
+    margin-top: 15px;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: vcr;
+    color: white;
+}
+
+.tv-card{
+    padding-top: 20px;
+    position: relative;
+    height: 500;
+    top: 160px;
+    width: 600px;
+    left: -100px;
+    border: none;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .tv-card{
+        position: relative;
+        height: 500;
+        top: 160px;
+        width: 423px;
+        left: -15px;
+    }
+    .tvBg {
+        background: none !important;
+    }
+
+    #questionCard {
+        background: none !important;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .tv-card{
+        padding-top: 20px;
+        position: relative;
+        height: 500;
+        top: 124px;
+        width: 600px;
+        left: -55px;
+    }
+    .tvBg {
+        background-position-x: -325px;
+    }
+
+    h3 {
+        font-size: 22px;
+    }
+
+    h2 {
+        font-size: 32px;
+    }
+
+}
+
+@media only screen and (min-width: 768px) {
+    .tv-card{
+        padding-top: 20px;
+        position: relative;
+        height: 500;
+        top: 124px;
+        width: 600px;
+        left: -90px;
+    }
+
+    .tvBg {
+        background-position: center;
+    }
+} 
+
+@media only screen and (min-width: 1440px) {
+    .tv-card{
+        position: relative;
+        height: 500;
+        top: 150px;
+        width: 600px;
+        left: -100px;
+    }
+
+    #questionCard {
+        padding-top: 60px;
+        position: relative;
+        top: -25px;
+    }
+} 
