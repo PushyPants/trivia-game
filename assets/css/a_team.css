@@ -1,0 +1,80 @@
+@font-face {
+    font-family: ateam;
+    src: url(../fonts/36103_Stencil2.ttf);
+}
+
+body {
+    background-color: #EDDFC5;
+}
+
+.tv-card {
+    border: 20px solid #576937;
+    border-radius: 25px;
+}
+
+.card-header h1, .card-header h2, .card-header h3, .card-header h4, .card-header h5 {
+    font-family: ateam;
+    color: #ACDD4D;
+}
+
+.jumbotron{
+    background-color: black;
+    border-bottom: 20px solid #576937;
+}
+
+.jumbotron h1 {
+    font-family: ateam;
+    color: 576937;
+    line-height: 4rem;
+    font-size: 5rem;
+}
+.card-header {
+    background-color: black;
+    border-bottom: 2px solid 576937;
+}
+
+.card-header h3 {
+    padding-top: 10px;
+    color: white;
+    font-size: 3rem;
+}
+
+.card-title {
+    margin-bottom:0;
+}
+
+.card-header h5 {
+    padding-top:15px;
+    color: white;
+    font-size: 2rem;
+}
+
+.card-body h1 {
+    font-family: ateam;
+    color: #576937;
+}
+    
+.card-header {
+    border-bottom: 2px solid #576937;
+}
+
+.card-header h3 {
+    font-size: 3rem;
+}
+
+.card-header h5 {
+    font-size: 2rem;
+}
+
+.card-body h1 {
+    font-family: ateam;
+    color: #576937;
+}
+
+.card-body h3 {
+    color: #576937;
+}
+
+h3.answer:hover {
+    color: #acdd4d;
+}
