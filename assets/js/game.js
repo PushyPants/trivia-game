@@ -3,7 +3,7 @@ $(document).ready(function(){
     let totalCorrect = 0;
     let totalIncorrect = 0;
     let totalUnanswered = 0;
-    let currentQuestion = 0;
+    let currentQuestion = 1;
     let gameTitle;
     let tvShow;
     let qIndex;
@@ -17,6 +17,12 @@ $(document).ready(function(){
 
     var questions = [
         {knight_rider:[
+            {
+                goodGif: [],
+                badGif: [],
+                goodSound: [],
+                badsound:[],
+            },
             {
                 question: `What is Michael Knight's original name?`,
                 choices: ['Michael King', 'Michael Day','Michael Long','Michael Selleck'],
@@ -64,6 +70,12 @@ $(document).ready(function(){
             }   
         ]},
         {a_team:[
+            {
+                goodGif: [],
+                badGif: [],
+                goodSound: [],
+                badsound:[],
+            },
             {
                 question: `In the United States of America, the "A-team" ran for 4 years during the 80s. But, which years?`,
                 choices: ['1984-1988','1981-1985','1983-1987','1985-1989'],
@@ -124,7 +136,7 @@ $(document).ready(function(){
     gameStart();
 
     function generateSound(soundArray) {
-        shuffleArray(soundArray);
+        shuffleArray(soundArray, 0);
         console.log(soundArray[0]);
         sound = new Howl({
             src: [`assets/sounds/`+soundArray[0]+`.mp3`]
@@ -135,8 +147,7 @@ $(document).ready(function(){
     function gameStart() {
         $('#questionCard').empty();
         $('#tvBg').ready(function(){
-            $('#questionCard').css({
-                
+            $('#questionCard').css({                
                 'background': `url('https://media1.giphy.com/media/26tPbLsr9oE72erjG/giphy.gif')`,
                 'z-index':'-1',
             });
@@ -174,7 +185,7 @@ $(document).ready(function(){
                 $(this).fadeIn('slow');
             })
             console.log(tvShow)
-            shuffleArray(qIndex);
+            shuffleArray(qIndex,1);
             console.log(qIndex)
             displayQuestion();
         })
@@ -183,7 +194,7 @@ $(document).ready(function(){
     }
 
     function restart() {
-        currentQuestion = 0;
+        currentQuestion = 1;
         totalCorrect = 0;
         totalIncorrect = 0;
         totalUnanswered = 0;$('#correctHeader').empty();
@@ -195,9 +206,10 @@ $(document).ready(function(){
         gameStart();  
     }
 
-    function shuffleArray(array) {
-        for (var i = array.length - 1; i > 0; i--) {
+    function shuffleArray(array, index) {
+        for (var i = array.length - 1; i > index; i--) {
             var j = Math.floor(Math.random() * (i + 1));
+            if(j===0){j+=1} else {j};
             var temp = array[i];
             array[i] = array[j];
             array[j] = temp;
@@ -293,7 +305,7 @@ $(document).ready(function(){
         `);            
         $('#question').text(i.question);
         console.log(i.question);
-        shuffleArray(i.choices);
+        shuffleArray(i.choices,0);
         for (j=0; j < i.choices.length; j++ ){
             $('#choices').append($('<h3 id="answerIndex' + j + '" class="answer"></h3>').text(i.choices[j]));
         }

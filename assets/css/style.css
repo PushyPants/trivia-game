@@ -114,9 +114,15 @@ h1, h2, h3, h4, h5 {
     .tv-card{
         position: relative;
         height: 500;
-        top: 95px;
+        top: -290px;
         width: 600px;
-        left: -85px;
+        left: -65%;
+    }
+
+    #cardPositioner {
+        position: absolute;
+        top:50%;
+        left:50%;
     }
 
     #questionCard {

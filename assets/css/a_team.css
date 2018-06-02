@@ -72,9 +72,10 @@ body {
 }
 
 .card-body h3 {
-    color: #576937;
+    color: black;
 }
 
 h3.answer:hover {
-    color: #acdd4d;
+    color: #576937;
+    cursor: pointer;
 }

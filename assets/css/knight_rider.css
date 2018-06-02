@@ -68,6 +68,7 @@ body {
 }
 
 h3.answer:hover {
+    cursor: pointer;
     color: #acdd4d;
 }
 
